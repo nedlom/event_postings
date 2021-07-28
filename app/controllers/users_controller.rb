@@ -16,10 +16,27 @@ class UsersController < ApplicationController
     end
 
     get '/signup' do 
+        erb :signup
+    end
+
+    post '/users' do 
+        if !params[:name].empty? && !params[:email].empty && !params[:password].empty? # won't save w/o password
+            @user = User.create(params)
+            session[:user_id] = @user.id
+            redirect "/users/#{@user.id}"
+        else
+            redirect '/signup'
+        end
     end
 
     get '/users/:id' do 
-        @user = User.find(params[:id])
+        @user = User.find_by(id: params[:id])
+        erb :'users/show'
+    end
+
+    get '/logout' do
+        session.clear
+        redirect '/'
     end
 
 end

@@ -7,6 +7,8 @@ class CreateEventsTable < ActiveRecord::Migration
       t.string :location
       t.string :date
       t.string :time
+      t.integer :user_id
+      t.timestamps null: false
     end
   end
 end

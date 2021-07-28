@@ -6,9 +6,20 @@ class UsersController < ApplicationController
 
     # receive login form, find user, log user in (create session)
     post '/login' do 
+        @user = User.find_by(email: params[:email])
+
+        if @user && @user.authenticate(params[:password])
+            session[:user_id] = @user.id
+            redirect "/users/#{@user.id}"
+        else
+        end
     end
 
     get '/signup' do 
+    end
+
+    get '/users/:id' do 
+        @user = User.find(params[:id])
     end
 
 end

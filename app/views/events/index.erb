@@ -2,7 +2,8 @@
 
 <% @events.each do |event| %>
     <p>
-        Event: <%= event.title %> <br>
+        Event: <a href="/events/<%= event.id %>"><%= event.title %></a> 
+        <br>
         Hosted By: <%= event.user.name %>
     </p>
 <% end %>

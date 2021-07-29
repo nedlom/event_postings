@@ -15,9 +15,13 @@
   </head>
   <body>
     <div class="nav">
-      <a href="/logout">Logout</a>
-      <a href="/events">All Events</a>
-      <a href="/events/new">Create New Event</a>
+      <% if current_user %>
+        <a href="/logout">Logout</a>
+        <a href="/events/new">Create New Event</a>
+      <% else %>
+        <a href="/login">Login</a>
+      <% end %>
+      <a href="/events">See All Events</a>
     </div>
     <div class="wrapper">
 

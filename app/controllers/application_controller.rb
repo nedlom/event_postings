@@ -10,6 +10,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/" do
+    binding.pry
     if logged_in?
       redirect "/users/#{current_user.id}"
     else
@@ -24,9 +25,12 @@ class ApplicationController < Sinatra::Base
     end
 
     def current_user
-      @current_user = User.find_by(id: session[:user_id])
+      @current_user ||= User.find_by(id: session[:user_id])
     end
 
+    def authorized_to_edit?(event)
+      event.user == current_user
+    end
   end
 
 end

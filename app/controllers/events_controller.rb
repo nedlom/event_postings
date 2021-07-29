@@ -28,18 +28,26 @@ class EventsController < ApplicationController
     
     # show route
     get '/events/:id' do
-        @event = Event.find(params[:id])
+        set_event
         erb :'/events/show'
     end
 
     get '/events/:id/edit' do 
-        @event = Event.find(params[:id])
+        set_event
         erb :'/events/edit'
     end
 
     patch '/events/:id' do
-        "Hello World"
-      end
+        set_event
+        @entry.update(params)
+        redirect "/events/#{@entry.id}"
+    end
+    
 
+    private
+    # instance method so @event available to each method in class
+    def set_event
+        @event = Event.find(params[:id])
+    end
 
 end

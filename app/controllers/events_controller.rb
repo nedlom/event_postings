@@ -37,5 +37,9 @@ class EventsController < ApplicationController
         erb :'/events/edit'
     end
 
+    patch '/events/:id' do
+        "Hello World"
+      end
+
 
 end

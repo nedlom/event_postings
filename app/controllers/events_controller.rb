@@ -34,6 +34,7 @@ class EventsController < ApplicationController
     end
 
     get '/events/:id/edit' do 
+        @event = Event.find(params[:id])
         erb :'/events/edit'
     end
 

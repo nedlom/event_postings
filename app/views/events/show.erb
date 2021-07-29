@@ -1,4 +1,9 @@
 <%= @event.title %>
+<%= @event.user.name %>
+<%= @event.description %>
+<%= @event.location %>
+<%= @event.date %>
+<%= @event.time %>
 
 <a href="/events/<%= @event.id %>/edit" %>Edit Event</a>
 

@@ -6,7 +6,6 @@ class EventsController < ApplicationController
     end
 
     # post events
-
     post '/events' do 
         if !logged_in?
             redirect '/'

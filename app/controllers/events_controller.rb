@@ -34,13 +34,30 @@ class EventsController < ApplicationController
 
     get '/events/:id/edit' do 
         set_event
-        erb :'/events/edit'
+        if logged_in?
+            if @event.user == current_user
+                erb :'/events/edit'
+            else
+                redirect "/users/#{current_user.id}"
+            end
+        else
+            redirect '/'
+        end
     end
 
     patch '/events/:id' do
         set_event
-        @entry.update(params)
-        redirect "/events/#{@entry.id}"
+        if logged_in?
+            if @event.user == current_user
+                @entry.update(params)
+                redirect "/events/#{@entry.id}"
+            else 
+                redirect "/users/#{current_user.id}"
+            end
+
+        else
+            redirect '/'
+        end
     end
     
 

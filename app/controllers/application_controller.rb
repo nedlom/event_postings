@@ -31,6 +31,7 @@ class ApplicationController < Sinatra::Base
     def authorized_to_edit?(event)
       event.user == current_user
     end
+    
   end
 
 end

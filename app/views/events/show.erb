@@ -5,7 +5,7 @@
 <%= @event.date %>
 <%= @event.time %>
 
-<% if authorized_to_edit(@event) %>
+<% if authorized_to_edit?(@event) %>
   <a href="/events/<%= @event.id %>/edit" %>Edit Event</a>
 
   <form method="post" action="/events/<%= @event.id %>">

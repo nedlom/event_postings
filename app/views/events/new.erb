@@ -1,25 +1,27 @@
-<h2>create a new event</h2>
+<h2>Create A New Event</h2>
 
 <form method="post" action="/events">
     <p>
-        <label>label</label><br>
-        <input type="text" name="title">
-    </p>   
-    <p>
-        <label>label</label><br>
-        <textarea type="text" name="description"></textarea>
+        <label>Event Title</label>
+        <input type="text" name="title" size="81">
     </p>
+
     <p>
-        <label>label</label><br>
+        <label>Location</label>
         <input type="text" name="location">
-    </p>
-    <p>
-        <label>label</label><br>
+    
+        <label>Date</label>
         <input type="text" name="date">
-    </p>
-        <label>label</label><br>
+
+        <label>Time</label>
         <input type="text" name="time">
     </p>
+
+    <p>
+        <label>Event Description</label><br>
+        <textarea rows="10" cols="86" type="text" name="description"></textarea>
+    </p>
+
     <p>
         <input type="submit" value="Create Event">
     </p>

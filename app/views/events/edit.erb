@@ -1,1 +1,26 @@
-edit form
+edit form<h2>create a new event</h2>
+
+<form method="post" action="/events">
+    <p>
+        <label>label</label><br>
+        <input type="text" name="title" value=<%= %>>
+    </p>   
+    <p>
+        <label>label</label><br>
+        <textarea type="text" name="description" value=<%= %>></textarea>
+    </p>
+    <p>
+        <label>label</label><br>
+        <input type="text" name="location" value=<%= %>>
+    </p>
+    <p>
+        <label>label</label><br>
+        <input type="text" name="date" value=<%= %>>
+    </p>
+        <label>label</label><br>
+        <input type="text" name="time" value=<%= %>>
+    </p>
+    <p>
+        <input type="submit" value="Create Event" value=<%= %>>
+    </p>
+</form>

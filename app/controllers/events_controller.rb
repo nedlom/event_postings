@@ -29,6 +29,7 @@ class EventsController < ApplicationController
     # show route
     get '/events/:id' do
         set_event
+        binding.pry
         erb :'/events/show'
     end
 
@@ -49,12 +50,18 @@ class EventsController < ApplicationController
         set_event
         if logged_in?
             if @event.user == current_user
-                @entry.update(params)
-                redirect "/events/#{@entry.id}"
+                binding.pry
+                @event.update(
+                    title: params[:title],
+                    description: params[:description],
+                    location: params[:location],
+                    date: params[:date],
+                    time: params[:time]
+                )
+                redirect "/events/#{@event.id}"
             else 
                 redirect "/users/#{current_user.id}"
             end
-
         else
             redirect '/'
         end

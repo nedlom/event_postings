@@ -55,6 +55,7 @@ class EventsController < ApplicationController
   patch '/events/:id' do
     set_event
     if logged_in?
+      # need validations
       if @event.user == current_user
         @event.update(
           title: params[:title],
@@ -71,7 +72,16 @@ class EventsController < ApplicationController
       redirect '/'
     end
   end
-    
+
+  delete '/events/:id' do
+    set_event
+    if authorized_to_edit(event)
+      @event.destroy
+      redirect '/events'
+    else
+      redirect '/events'
+    end 
+  end
 
   private
   # instance method so @event available to each method in class

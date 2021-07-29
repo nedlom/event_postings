@@ -1,26 +1,28 @@
-edit form<h2>create a new event</h2>
+<h2>Edit This Event</h2>
 
 <form method="post" action="/events/<%= @event.id %>">
     <input type="hidden" name="_method" value="patch">
     <p>
-        <label>label</label><br>
-        <input type="text" name="title" value=<%= %>>
-    </p>   
+        <label>Event Title</label>
+        <input type="text" name="title" size="81" value="<%= @event.title %>">
+    </p>
+
     <p>
-        <label>label</label><br>
-        <textarea type="text" name="description" value=<%= %>></textarea>
+        <label>Location</label>
+        <input type="text" name="location">
+    
+        <label>Date</label>
+        <input type="text" name="date">
+
+        <label>Time</label>
+        <input type="text" name="time">
     </p>
+
     <p>
-        <label>label</label><br>
-        <input type="text" name="location" value=<%= %>>
+        <label>Event Description</label><br>
+        <textarea rows="10" cols="86" type="text" name="description"></textarea>
     </p>
-    <p>
-        <label>label</label><br>
-        <input type="text" name="date" value=<%= %>>
-    </p>
-        <label>label</label><br>
-        <input type="text" name="time" value=<%= %>>
-    </p>
+
     <p>
         <input type="submit" value="Create Event">
     </p>

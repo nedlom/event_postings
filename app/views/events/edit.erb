@@ -1,6 +1,7 @@
 edit form<h2>create a new event</h2>
 
-<form method="post" action="/events">
+<form method="post" action="/events/<%= @event.id %>">
+    <input type="hidden" name="_method" value="patch">
     <p>
         <label>label</label><br>
         <input type="text" name="title" value=<%= %>>

@@ -22,13 +22,14 @@ class UsersController < ApplicationController
   end
 
   post '/users' do 
-    if !params[:name].empty? && !params[:email].empty && !params[:password].empty? # won't save w/o password
-      @user = User.create(params)
+    @user = User.new(params)
+
+    if @user.save
       session[:user_id] = @user.id
       flash[:message] = "Welcome #{@user.id}. You have created...."
       redirect "/users/#{@user.id}"
     else
-      flash[:errors] = "Account creation failure"
+      flash[:errors] = "Account creation failure #{@user.errors.full_messages.to_sentence}"
       redirect '/signup'
     end
   end

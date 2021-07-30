@@ -11,12 +11,8 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/" do
-    binding.pry
-    if logged_in?
-      redirect "/users/#{current_user.id}"
-    else
-      erb :welcome
-    end
+    redirect_if_logged_in
+    erb :welcome
   end
 
   helpers do
@@ -33,9 +29,15 @@ class ApplicationController < Sinatra::Base
       event.user == current_user
     end
 
+    def redirect_if_logged_in
+      if logged_in?
+        flash[:errors] = "You are already logged in."
+        redirect "/users/#{current_user.id}"
+      end 
+    end
+
     def redirect_if_not_logged_in
       if !logged_in?
-        flash[:errors] = "you must be blah..."
         redirect '/'
       end
     end

@@ -1,7 +1,27 @@
 class UsersController < ApplicationController
 
+  get '/signup' do 
+    redirect_if_logged_in
+    erb :'/users/signup'
+  end
+
+  post '/users' do 
+    binding.pry
+    @user = User.new(params)
+
+    if @user.save
+      session[:user_id] = @user.id
+      flash[:message] = "Welcome #{@user.id}. You have created...."
+      redirect "/users/#{@user.id}"
+    else
+      flash[:errors] = "Account creation failure #{@user.errors.full_messages.to_sentence}"
+      redirect 'users/signup'
+    end
+  end
+
   get '/login' do 
-    erb :login
+    redirect_if_logged_in
+    erb :'/users/login'
   end
 
   # receive login form, find user, log user in (create session)
@@ -13,37 +33,23 @@ class UsersController < ApplicationController
       redirect "/users/#{@user.id}"
     else
       flash[:errors] = "Your credentials blah blah"
-      redirect '/login' 
-    end
-  end
-
-  get '/signup' do 
-    erb :signup
-  end
-
-  post '/users' do 
-    @user = User.new(params)
-
-    if @user.save
-      session[:user_id] = @user.id
-      flash[:message] = "Welcome #{@user.id}. You have created...."
-      redirect "/users/#{@user.id}"
-    else
-      flash[:errors] = "Account creation failure #{@user.errors.full_messages.to_sentence}"
-      redirect '/signup'
+      redirect :'users/login' 
     end
   end
 
   get '/users/:id' do 
-    @user = User.find_by(id: params[:id])
     redirect_if_not_logged_in
-    erb :'users/show'
+    @user = User.find_by(id: params[:id])
+    if @user == current_user
+      erb :'users/show'
+    else 
+      flash[:errors] = "You don't have permission to access that page."
+      redirect "/events"
+    end
   end
 
   get '/logout' do
-    binding.pry
     session.clear
-    binding.pry
     redirect '/'
   end
 

@@ -14,14 +14,12 @@ class EventsController < ApplicationController
   # post events
   post '/events' do 
     redirect_if_not_logged_in
-
-    if params[:title] != ""
-      #create new entry
+    @event = current_user.events.create(params)
+    if @event.save
       flash[:message] = "success"
-      @event = current_user.events.create(params)
       redirect "/events/#{@event.id}"
     else
-      flash[:error] = "something went wrong"
+      flash[:errors] = "Please fill out all fields to post an event."
       redirect '/events/new'
     end
   end
@@ -42,7 +40,6 @@ class EventsController < ApplicationController
     set_event
     redirect_if_not_logged_in
     if authorized_to_edit?(@event)
-      binding.pry
       erb :'/events/edit'
     else
       redirect "/users/#{current_user.id}"

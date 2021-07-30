@@ -1,5 +1,4 @@
 class EventsController < ApplicationController
-# get events/new
 
   get '/events' do 
     not_logged_in_redirect
@@ -14,7 +13,6 @@ class EventsController < ApplicationController
   end
 
   post '/events' do 
-    # redirect_if_not_logged_in
     @event = current_user.events.create(params)
     if @event.save
       flash[:message] = "success"

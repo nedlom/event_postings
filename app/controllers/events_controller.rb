@@ -19,9 +19,11 @@ class EventsController < ApplicationController
 
     if params[:title] != ""
       #create new entry
+      flash[:message] = "success"
       @event = current_user.events.create(params)
       redirect "/events/#{@event.id}"
     else
+      flash[:message] = "something went wrong"
       redirect '/events/new'
     end
   end

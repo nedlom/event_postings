@@ -2,18 +2,19 @@ class EventsController < ApplicationController
 # get events/new
 
   get '/events' do 
+    not_logged_in_redirect
     @events = Event.all
     erb :'/events/index'
   end
 
 
   get '/events/new' do 
+    not_logged_in_redirect
     erb :'/events/new'
   end
 
-  # post events
   post '/events' do 
-    redirect_if_not_logged_in
+    # redirect_if_not_logged_in
     @event = current_user.events.create(params)
     if @event.save
       flash[:message] = "success"
@@ -24,22 +25,16 @@ class EventsController < ApplicationController
     end
   end
 
-  # index route
-
-  get '/events' do 
-    erb :'/events/index'
-  end
-  
-  # show route
   get '/events/:id' do
+    not_logged_in_redirect
     set_event
     erb :'/events/show'
   end
 
   get '/events/:id/edit' do 
     set_event
-    redirect_if_not_logged_in
-    if authorized_to_edit?(@event)
+    not_logged_in_redirect
+    if authorized_to_access?(@event.user)
       erb :'/events/edit'
     else
       redirect "/users/#{current_user.id}"
@@ -48,9 +43,7 @@ class EventsController < ApplicationController
 
   patch '/events/:id' do
     set_event
-    redirect_if_not_logged_in
-      # need validations
-    if @event.user == current_user
+    if authorized_to_access?(@event.user)
       @event.update(
         title: params[:title],
         description: params[:description],
@@ -67,7 +60,7 @@ class EventsController < ApplicationController
 
   delete '/events/:id' do
     set_event
-    if authorized_to_edit(event)
+    if authorized_to_access?(@event.user)
       @event.destroy
       flash[:message] = "Successfully deleted that entry"
       redirect '/events'

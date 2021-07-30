@@ -1,26 +1,25 @@
 class UsersController < ApplicationController
 
   get '/signup' do 
-    redirect_if_logged_in
+    logged_in_redirect
     erb :'/users/signup'
   end
 
   post '/users' do 
-    binding.pry
     @user = User.new(params)
-
-    if @user.save
-      session[:user_id] = @user.id
-      flash[:message] = "Welcome #{@user.id}. You have created...."
-      redirect "/users/#{@user.id}"
-    else
-      flash[:errors] = "Account creation failure #{@user.errors.full_messages.to_sentence}"
-      redirect 'users/signup'
-    end
+    binding.pry
+    # if @user.save
+    #   session[:user_id] = @user.id
+    #   flash[:message] = "Welcome #{@user.id}. You have created...."
+    #   redirect "/users/#{@user.id}"
+    # else
+    #   flash[:errors] = "Account creation failure #{@user.errors.full_messages.to_sentence}"
+    #   redirect 'users/signup'
+    # end
   end
 
   get '/login' do 
-    redirect_if_logged_in
+    logged_in_redirect
     erb :'/users/login'
   end
 
@@ -38,12 +37,12 @@ class UsersController < ApplicationController
   end
 
   get '/users/:id' do 
-    redirect_if_not_logged_in
+    not_logged_in_redirect
     @user = User.find_by(id: params[:id])
-    if @user == current_user
+    if authorized_to_access?(@user)
       erb :'users/show'
     else 
-      flash[:errors] = "You don't have permission to access that page."
+      flash[:errors] = "You don't have access to that page."
       redirect "/events"
     end
   end

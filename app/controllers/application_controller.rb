@@ -11,7 +11,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/" do
-    redirect_if_logged_in
+    logged_in_redirect
     erb :welcome
   end
 
@@ -25,19 +25,20 @@ class ApplicationController < Sinatra::Base
       @current_user ||= User.find_by(id: session[:user_id])
     end
 
-    def authorized_to_edit?(event)
-      event.user == current_user
+    def authorized_to_access?(user)
+      user == current_user
     end
 
-    def redirect_if_logged_in
+    def logged_in_redirect
       if logged_in?
         flash[:errors] = "You are already logged in."
         redirect "/users/#{current_user.id}"
       end 
     end
 
-    def redirect_if_not_logged_in
+    def not_logged_in_redirect
       if !logged_in?
+        flash[:errors] = "Please log in or signup."
         redirect '/'
       end
     end

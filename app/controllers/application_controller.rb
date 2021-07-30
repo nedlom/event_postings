@@ -33,6 +33,13 @@ class ApplicationController < Sinatra::Base
       event.user == current_user
     end
 
+    def redirect_if_not_logged_in
+      if !logged_in?
+        flash[:errors] = "you must be blah..."
+        redirect '/'
+      end
+    end
+
   end
 
 end

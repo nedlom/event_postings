@@ -13,9 +13,7 @@ class EventsController < ApplicationController
 
   # post events
   post '/events' do 
-    if !logged_in?
-      redirect '/'
-    end
+    redirect_if_not_logged_in
 
     if params[:title] != ""
       #create new entry
@@ -23,7 +21,7 @@ class EventsController < ApplicationController
       @event = current_user.events.create(params)
       redirect "/events/#{@event.id}"
     else
-      flash[:message] = "something went wrong"
+      flash[:error] = "something went wrong"
       redirect '/events/new'
     end
   end
@@ -42,43 +40,39 @@ class EventsController < ApplicationController
 
   get '/events/:id/edit' do 
     set_event
-    if logged_in?
-      if authorized_to_edit?(@event)
-        binding.pry
-        erb :'/events/edit'
-      else
-        redirect "/users/#{current_user.id}"
-      end
+    redirect_if_not_logged_in
+    if authorized_to_edit?(@event)
+      binding.pry
+      erb :'/events/edit'
     else
-      redirect '/'
+      redirect "/users/#{current_user.id}"
     end
   end
 
   patch '/events/:id' do
     set_event
-    if logged_in?
+    redirect_if_not_logged_in
       # need validations
-      if @event.user == current_user
-        @event.update(
-          title: params[:title],
-          description: params[:description],
-          location: params[:location],
-          date: params[:date],
-          time: params[:time]
-        )
-        redirect "/events/#{@event.id}"
-      else 
-        redirect "/users/#{current_user.id}"
-      end
-    else
-      redirect '/'
+    if @event.user == current_user
+      @event.update(
+        title: params[:title],
+        description: params[:description],
+        location: params[:location],
+        date: params[:date],
+        time: params[:time]
+      )
+      redirect "/events/#{@event.id}"
+    else 
+      redirect "/users/#{current_user.id}"
     end
+    
   end
 
   delete '/events/:id' do
     set_event
     if authorized_to_edit(event)
       @event.destroy
+      flash[:message] = "Successfully deleted that entry"
       redirect '/events'
     else
       redirect '/events'

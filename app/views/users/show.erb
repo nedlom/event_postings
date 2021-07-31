@@ -1,17 +1,24 @@
-<h2><%= @user.name %></h2><br><br>
-<h4><%= @user.email %></h4><br><br>
+<style>
 
-<ol>
-  <% @user.events.each do |event| %>
-  <li>
-    <a href="/events/<%= event.id %>">
-      <p><%= event.title %></p>
-      </a>
-  </li>
-  <% end %>
-</ol>
+  .divide {
+    width:68%;
+    height:auto;
+    display:inline-block;
+  } 
 
-<ul>
-  <li><%=@user.name%></li>
-  <li><%=@user.email%></li>
-</ul>
+  #name, #email {
+    display:inline-block;
+  }
+
+</style>
+
+<h2 id="name">Hello, <%= @user.name %></h2>
+<div class="divide"></div>
+<h2 id="email"><%= @user.email %></h2><br><br>
+
+Your Posted Events:
+<% @user.events.each do |event| %>
+  <p>
+    <a href="/events/<%= event.id %>"><%= event.title %></a>
+  </p>
+<% end %>

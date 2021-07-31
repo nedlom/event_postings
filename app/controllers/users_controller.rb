@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
 
   get '/signup' do 
-    logged_in_redirect
+    if logged_in?
+      redirect "/users/#{user.id}"
+    end
     erb :'/users/signup'
   end
 
@@ -12,13 +14,15 @@ class UsersController < ApplicationController
       flash[:message] = "Welcome #{@user.name}. You have created...."
       redirect "/users/#{@user.id}"
     else
-      flash[:errors] = "Account creation failure #{@user.errors.full_messages.to_sentence}"
-      redirect 'users/signup'
+      flash[:errors] = "Account creation failure. #{@user.errors.full_messages.to_sentence}."
+      redirect '/signup'
     end
   end
 
   get '/login' do 
-    logged_in_redirect
+    if logged_in?
+      redirect "/users/#{current_user.id}"
+    end
     erb :'/users/login'
   end
 
@@ -36,9 +40,12 @@ class UsersController < ApplicationController
   end
 
   get '/users/:id' do 
-    not_logged_in_redirect
+    if !logged_in?
+      redirect "/"
+    end
+
     @user = User.find_by(id: params[:id])
-    if authorized_access?(@user)
+    if @user == current_user
       erb :'users/show'
     else 
       flash[:errors] = "You don't have access to that page."

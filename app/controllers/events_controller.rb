@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
 
   get '/events' do 
-    if !logged_in
+    if !logged_in?
       redirect '/'
     else
       @events = Event.all
@@ -10,7 +10,7 @@ class EventsController < ApplicationController
   end
 
   get '/events/new' do 
-    if !logged_in
+    if !logged_in?
       redirect '/'
     else
       erb :'/events/new'
@@ -18,6 +18,9 @@ class EventsController < ApplicationController
   end
 
   post '/events' do 
+    if !logged_in?
+      redirect '/'
+    end
     @event = current_user.events.build(params)
     if @event.save
       flash[:message] = "success"
@@ -29,16 +32,22 @@ class EventsController < ApplicationController
   end
 
   get '/events/:id' do
-    @event = Event.find(params[:id])
-    binding.pry
-    
-    erb :'/events/show'
+    @event = Event.find_by(id: params[:id])  
+    if @event
+      erb :'/events/show'
+    else
+      flash[:error] = "There is no event with that id."
+      redirect '/events'
+    end
   end
 
   get '/events/:id/edit' do 
-  
-    
-    if 
+    if !logged_in?
+      redirect '/'
+    end
+
+    @event = Event.find_by(id: params[:id])
+    if @event
       erb :'/events/edit'
     else
       redirect "/users/#{current_user.id}"
@@ -46,31 +55,27 @@ class EventsController < ApplicationController
   end
 
   patch '/events/:id' do
-    event = Event.find(params[:id])
-    if authorized_access?(@event.user)
-      @event.update(
-        title: params[:title],
-        description: params[:description],
-        location: params[:location],
-        date: params[:date],
-        time: params[:time]
-      )
-      redirect "/events/#{@event.id}"
+    event = Event.find_by(id: params[:id])
+    
+    if event.user != current_user
+      flash[:errors] = "You can only edit your own events."
+      redirect '/'
+    end
+
+   if event.update(params[:event])
+      redirect "/events/#{event.id}"
     else 
+      flash[:errors] = "Update failed. #{event.errors.full_messages.to_sentence}"
       redirect "/users/#{current_user.id}"
     end
     
   end
 
   delete '/events/:id' do
-    set_event
-    if authorized_to_access?(@event.user)
-      @event.destroy
-      flash[:message] = "Successfully deleted that entry"
-      redirect '/events'
-    else
-      redirect '/events'
-    end 
+    event = Event.find_by(id: params[:id])
+    event.destroy
+    flash[:message] = "Successfully deleted that entry"
+    redirect '/events'  
   end
 
   # private

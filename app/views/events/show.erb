@@ -1,16 +1,36 @@
-<h1><%= @event.title %></h1>
-<h3>Hosted By: <%= @event.user.name %><h3>
-<%= @event.description %>
-<%= @event.location %>
-<%= @event.date %>
-<%= @event.time %>
+<style>
+  #button1 , #button2 {
+    display:inline-block;
+  }
+  .divide {
+    width:20px;
+    height:auto;
+    display:inline-block;
+  } 
+</style>
 
-<% if authorized_access?(@event.user) %>
-  <a href="/events/<%= @event.id %>/edit" %>Edit Event</a>
+<h2>Event: <%= @event.title %></h2>
+Host: <%= @event.user.name %>
+<br><br>
+Description: <%= @event.description %>
+<br><br>
+Location: <%= @event.location %>
+<br><br>
+Date: <%= @event.date %>
+<br><br>
+Time: <%= @event.time %>
+<br><br>
 
+<% if @event.user == current_user %>
+<div id="button1">
+  <a href="/events/<%= @event.id %>/edit" %><button>Edit Event</button></a>
+</div>
+<div class="divide"></div>
+<div id="button2">
   <form method="post" action="/events/<%= @event.id %>">
     <input type="hidden" name="_method" value="delete">
-    <input type="submit" value="Delete">
+    <input type="submit" value="Delete Event">
   </form>
+</div>
 <% end %>
 

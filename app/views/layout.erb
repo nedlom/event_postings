@@ -58,18 +58,6 @@
 
     
     <div class="wrapper">
-        
-    <% if logged_in? %>
-      <h2>Hello, <%= current_user.name %>:</h2>
-      <span class="topnav">
-          <span>Hello, <%= current_user.name %>:</span>
-          <a href="/users/<%= current_user.id %>">Your Account</a>
-          <a href="/logout">Logout</a>
-          <a href="/events/new">Create New Event</a>
-          <a href="/events">See All Events</a>
-        </span>
-    <% end %>
-
       <% if logged_in? %>
         <div class="topnav">
           <span>Hello, <%= current_user.name %>:</span>
@@ -92,15 +80,6 @@
         <%= yield %>
 
       <footer class="branding">
-      <span class="nav">
-  <% if logged_in? %>
-    <a href="/users/<%= current_user.id %>">Your Account</a>
-    <a href="/logout">Logout</a>
-    <a href="/events/new">Create New Event</a>
-    <a href="/events">See All Events</a>
-  <% end %>
-</span>
-        
         <small>&copy; 2021 <strong>EventPostings</strong></small>
       </footer>
     </div>

@@ -27,6 +27,12 @@ class ApplicationController < Sinatra::Base
       @current_user ||= User.find_by(id: session[:user_id])
     end
 
+    def redirect_if_not_logged_in
+      if !logged_in?
+        flash[:message] = "Must login to view page."
+        redirect "/"
+      end
+
     # def authorized_access?(user)
     #   user == current_user
     # end

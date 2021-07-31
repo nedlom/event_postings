@@ -11,9 +11,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/" do
-    if logged_in?
-      redirect "/users/#{current_user.id}"
-    end
+    redirect_if_logged_in
     erb :welcome
   end
 
@@ -32,6 +30,15 @@ class ApplicationController < Sinatra::Base
         flash[:message] = "Must login to view page."
         redirect "/"
       end
+    end
+
+    def redirect_if_logged_in
+      if logged_in?
+        redirect "/events/index"
+      end
+    end
+  end
+end
 
     # def authorized_access?(user)
     #   user == current_user
@@ -50,7 +57,3 @@ class ApplicationController < Sinatra::Base
     #     redirect '/'
     #   end
     # end
-
-  end
-
-end

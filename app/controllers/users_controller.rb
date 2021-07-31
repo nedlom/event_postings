@@ -7,15 +7,14 @@ class UsersController < ApplicationController
 
   post '/users' do 
     @user = User.new(params)
-    binding.pry
-    # if @user.save
-    #   session[:user_id] = @user.id
-    #   flash[:message] = "Welcome #{@user.id}. You have created...."
-    #   redirect "/users/#{@user.id}"
-    # else
-    #   flash[:errors] = "Account creation failure #{@user.errors.full_messages.to_sentence}"
-    #   redirect 'users/signup'
-    # end
+    if @user.save
+      session[:user_id] = @user.id
+      flash[:message] = "Welcome #{@user.name}. You have created...."
+      redirect "/users/#{@user.id}"
+    else
+      flash[:errors] = "Account creation failure #{@user.errors.full_messages.to_sentence}"
+      redirect 'users/signup'
+    end
   end
 
   get '/login' do 
@@ -39,7 +38,7 @@ class UsersController < ApplicationController
   get '/users/:id' do 
     not_logged_in_redirect
     @user = User.find_by(id: params[:id])
-    if authorized_to_access?(@user)
+    if authorized_access?(@user)
       erb :'users/show'
     else 
       flash[:errors] = "You don't have access to that page."

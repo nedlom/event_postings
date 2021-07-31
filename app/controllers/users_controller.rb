@@ -1,9 +1,7 @@
 class UsersController < ApplicationController
 
   get '/signup' do 
-    if logged_in?
-      redirect "/users/#{user.id}"
-    end
+    redirect_if_logged_in
     erb :'/users/signup'
   end
 
@@ -11,31 +9,28 @@ class UsersController < ApplicationController
     @user = User.new(params)
     if @user.save
       session[:user_id] = @user.id
-      flash[:message] = "Welcome #{@user.name}. You have created...."
-      redirect "/users/#{@user.id}"
+      flash[:message] = "Account creation successful. Welcome, #{@user.name}."
+      redirect "/events/index"
     else
-      flash[:errors] = "Account creation failure. #{@user.errors.full_messages.to_sentence}."
+      flash[:errors] = "Account creation failed. #{@user.errors.full_messages.to_sentence}."
       redirect '/signup'
     end
   end
 
   get '/login' do 
-    if logged_in?
-      redirect "/users/#{current_user.id}"
-    end
+    redirect_if_logged_in
     erb :'/users/login'
   end
 
-  # receive login form, find user, log user in (create session)
   post '/login' do 
-    @user = User.find_by(email: params[:email])
-    if @user && @user.authenticate(params[:password])
-      session[:user_id] = @user.id
-      flash[:message] = "Welcome #{@user.name}!"
-      redirect "/users/#{@user.id}"
+    user = User.find_by(email: params[:email])
+    if user && user.authenticate(params[:password])
+      session[:user_id] = user.id
+      flash[:message] = "Welcome #{user.name}!"
+      redirect "/events/index"
     else
-      flash[:errors] = "Your credentials blah blah"
-      redirect :'users/login' 
+      flash[:errors] = "The email or password is incorrect."
+      redirect :'/login' 
     end
   end
 

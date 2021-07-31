@@ -1,38 +1,44 @@
 class EventsController < ApplicationController
 
   get '/events' do 
-    not_logged_in_redirect
-    @events = Event.all
-    erb :'/events/index'
+    if !logged_in
+      redirect '/'
+    else
+      @events = Event.all
+      erb :'/events/index'
+    end
   end
 
-
   get '/events/new' do 
-    not_logged_in_redirect
-    erb :'/events/new'
+    if !logged_in
+      redirect '/'
+    else
+      erb :'/events/new'
+    end
   end
 
   post '/events' do 
-    @event = current_user.events.create(params)
+    @event = current_user.events.build(params)
     if @event.save
       flash[:message] = "success"
       redirect "/events/#{@event.id}"
     else
-      flash[:errors] = "Please fill out all fields to post an event."
+      flash[:errors] = "Event creation failed. #{@event.errors.full_messages.to_sentence}."
       redirect '/events/new'
     end
   end
 
   get '/events/:id' do
-    not_logged_in_redirect
-    set_event
+    @event = Event.find(params[:id])
+    binding.pry
+    
     erb :'/events/show'
   end
 
   get '/events/:id/edit' do 
-    set_event
-    not_logged_in_redirect
-    if authorized_to_access?(@event.user)
+  
+    
+    if 
       erb :'/events/edit'
     else
       redirect "/users/#{current_user.id}"
@@ -40,8 +46,8 @@ class EventsController < ApplicationController
   end
 
   patch '/events/:id' do
-    set_event
-    if authorized_to_access?(@event.user)
+    event = Event.find(params[:id])
+    if authorized_access?(@event.user)
       @event.update(
         title: params[:title],
         description: params[:description],
@@ -67,10 +73,10 @@ class EventsController < ApplicationController
     end 
   end
 
-  private
-  # instance method so @event available to each method in class
-  def set_event
-    @event = Event.find(params[:id])
-  end
+  # private
+  # # instance method so @event available to each method in class
+  # def set_event
+  #   @event = Event.find(params[:id])
+  # end
 
 end

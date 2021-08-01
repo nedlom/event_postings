@@ -33,20 +33,54 @@ class ApplicationController < Sinatra::Base
     end
 
     def redirect_if_logged_in
-      flash[:message] = "You are already logged in." if logged_in?
-      redirect "/events"
+      if logged_in?
+        flash[:message] = "You are already logged in." 
+        redirect "/events"
+      end
     end
 
     def redirect_if_not_logged_in
-        flash[:message] = "Please login." if !logged_in?
+      if !logged_in?
+        flash[:message] = "Please login." 
         redirect "/"
       end
     end
 
-    def event_edit_authorization
+    def redirect_if_not_users_event_or_not_logged_in
       redirect_if_not_logged_in
-      flash[:errors] = "You are not authorized to edit this event." if !event_belongs_to_user?
-      redirect "/event/#{current_event}.id"
+      if !event_belongs_to_user?
+        flash[:errors] = "You are not authorized to make changes to #{current_event.user.name}'s event." 
+        redirect "/events/#{current_event.id}"
+      end
+    end
+
+    def params_date_fix
+      if params[:event]
+        date = params[:event][:date].split("-")
+        date[1], date[2] = date[2], date[1]
+        params[:event][:date] = date.reverse.join("/")
+      else
+        date = params[:date].split("-")
+        date[1], date[2] = date[2], date[1]
+        params[:date] = date.reverse.join("/")
+      end
+    end
+
+    def params_time_fix
+      time = params[:time1] + ":" + params[:time2] + params[:time3]
+      if params[:event]
+        params[:event][:time] = time
+      else
+        params[:time] = time
+      end
+      params.delete(:time1)
+      params.delete(:time2)
+      params.delete(:time3)
+    end
+
+    def format_date_and_time
+      params_date_fix
+      params_time_fix
     end
   end
 end

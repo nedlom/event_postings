@@ -12,7 +12,7 @@ class UsersController < ApplicationController
       flash[:message] = "Account creation successful. Welcome, #{@user.name}."
       redirect "/events"
     else
-      flash[:errors] = "Account creation failed. #{@user.errors.full_messages.to_sentence}."
+      flash[:errors] = "Account creation failed: #{@user.errors.full_messages.to_sentence.capitalize}."
       redirect '/signup'
     end
   end
@@ -40,18 +40,5 @@ class UsersController < ApplicationController
     flash[:message] = "You have successfully logged out."
     redirect '/'
   end
-
-  # get '/users/:id' do 
-  #   if !logged_in?
-  #     redirect "/"
-  #   end
-
-  #   @user = User.find_by(id: params[:id])
-  #   if @user == current_user
-  #     erb :'users/show'
-  #   else 
-  #     flash[:errors] = "You don't have access to that page."
-  #     redirect "/events"
-  #   end
-  # end
+  
 end

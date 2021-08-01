@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     if @user.save
       session[:user_id] = @user.id
       flash[:message] = "Account creation successful. Welcome, #{@user.name}."
-      redirect "/events/index"
+      redirect "/events"
     else
       flash[:errors] = "Account creation failed. #{@user.errors.full_messages.to_sentence}."
       redirect '/signup'
@@ -30,13 +30,14 @@ class UsersController < ApplicationController
       redirect "/events"
     else
       flash[:errors] = "The email or password is incorrect."
-      redirect :'/login' 
+      redirect '/login' 
     end
   end
 
   get '/logout' do
-    flash[:message] = "You have successfully logged out."
+    redirect_if_not_logged_in
     session.clear
+    flash[:message] = "You have successfully logged out."
     redirect '/'
   end
 

@@ -16,7 +16,6 @@ class ApplicationController < Sinatra::Base
   end
 
   helpers do
-    
     def logged_in?
       !!current_user
     end
@@ -27,7 +26,7 @@ class ApplicationController < Sinatra::Base
 
     def redirect_if_not_logged_in
       if !logged_in?
-        flash[:message] = "Must login to view page."
+        flash[:message] = "Must login to access page."
         redirect "/"
       end
     end
@@ -35,7 +34,7 @@ class ApplicationController < Sinatra::Base
     def redirect_if_logged_in
       if logged_in?
         flash[:message] = "You are already logged in."
-        redirect "/events/index"
+        redirect "/events"
       end
     end
   end

@@ -24,36 +24,29 @@ class ApplicationController < Sinatra::Base
       @current_user ||= User.find_by(id: session[:user_id])
     end
 
+    def current_event
+      @current_event ||= Event.find_by(id: params[:id])
+    end
+
+    def event_belongs_to_user?
+      current_user.events.include?(current_event)
+    end
+
+    def redirect_if_logged_in
+      flash[:message] = "You are already logged in." if logged_in?
+      redirect "/events"
+    end
+
     def redirect_if_not_logged_in
-      if !logged_in?
-        flash[:message] = "Must login to access page."
+        flash[:message] = "Please login." if !logged_in?
         redirect "/"
       end
     end
 
-    def redirect_if_logged_in
-      if logged_in?
-        flash[:message] = "You are already logged in."
-        redirect "/events"
-      end
+    def event_edit_authorization
+      redirect_if_not_logged_in
+      flash[:errors] = "You are not authorized to edit this event." if !event_belongs_to_user?
+      redirect "/event/#{current_event}.id"
     end
   end
 end
-
-    # def authorized_access?(user)
-    #   user == current_user
-    # end
-
-    # def logged_in_redirect
-    #   if logged_in?
-    #     flash[:errors] = "You are already logged in."
-    #     redirect "/users/#{current_user.id}"
-    #   end 
-    # end
-
-    # def not_logged_in_redirect
-    #   if !logged_in?
-    #     flash[:errors] = "Please log in or signup."
-    #     redirect '/'
-    #   end
-    # end

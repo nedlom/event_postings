@@ -12,6 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="/stylesheets/main.css" />
+
     <style>
       /* Add a black background color to the top navigation */
         .topnav {
@@ -39,9 +40,9 @@
           background-color: #04AA6D;
           color: white;
         }
-
       </style>
   </head>
+
   <body>
  
     <div class="nav">
@@ -60,8 +61,11 @@
         <h3 style="color: green; text-align: center;"><%= flash[:message] %></h3>
       <% end %>
       <% if flash[:errors] %>
-        <h3 style="color: red;"><%= flash[:errors] %></h3>
+        <h3 style="color: red; text-align: center;"><%= flash[:errors] %></h3>
       <% end %>
+
+        
+      <%= current_user.name if logged_in? %>
 
       <%= yield %>
 

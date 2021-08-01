@@ -9,27 +9,27 @@
   } 
 </style>
 
-<h2>Event: <%= @event.title %></h2>
-Host: <%= @event.user.name %>
+<h2>Event: <%= @current_event.title %></h2>
+Host: <%= @current_event.user.name %>
 <br><br>
-Description: <%= @event.description %>
+Description: <%= @current_event.description %>
 <br><br>
-Location: <%= @event.location %>
+Location: <%= @current_event.location %>
 <br><br>
-Date: <%= @event.date %>
+Date: <%= @current_event.date %>
 <br><br>
-Time: <%= @event.time %>
+Time: <%= @current_event.time %>
 <br><br>
 
-<% if @event.user == current_user %>
+<% if @current_event.user == current_user %>
   <div id="button1">
-    <a href="/events/<%= @event.id %>/edit" %><button>Edit Event</button></a>
+    <a href="/events/<%= @current_event.id %>/edit" %><button>Edit Event</button></a>
   </div>
 
   <div class="divide"></div>
-  
+
   <div id="button2">
-    <form method="post" action="/events/<%= @event.id %>">
+    <form method="post" action="/events/<%= @current_event.id %>">
       <input type="hidden" name="_method" value="delete">
       <input type="submit" value="Delete Event">
     </form>

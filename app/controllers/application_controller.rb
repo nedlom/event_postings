@@ -34,6 +34,7 @@ class ApplicationController < Sinatra::Base
 
     def redirect_if_logged_in
       if logged_in?
+        flash[:message] = "You are already logged in."
         redirect "/events/index"
       end
     end

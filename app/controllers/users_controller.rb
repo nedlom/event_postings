@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
       flash[:message] = "Welcome #{user.name}!"
-      redirect "/events/index"
+      redirect "/events"
     else
       flash[:errors] = "The email or password is incorrect."
       redirect :'/login' 
@@ -35,6 +35,7 @@ class UsersController < ApplicationController
   end
 
   get '/logout' do
+    flash[:message] = "You have successfully logged out."
     session.clear
     redirect '/'
   end

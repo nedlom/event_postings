@@ -1,9 +1,15 @@
-<h2>All Events</h2>
+<h2>Select An Event For More Details</h2>
 
-<% @events.each do |event| %>
-    <p>
-        Event: <a href="/events/<%= event.id %>"><%= "#{event.id}. #{event.title}" %></a> 
-        <br>
-        Host: <%= "#{event.user.id}. #{event.user.name}" %>
-    </p>
+<% if @events.empty? %>
+    <%= "There are no events scheduled at this time" %>
+<% else %>
+    <% @events.each do |event| %>
+        <p>
+            <b><a href="/events/<%= event.id %>"><%= event.title %></a></b> 
+            <br>
+            Host: <%= event.user.name %>
+            <br>
+            Date: <%= event.date %>
+        </p>
+    <% end %>
 <% end %>

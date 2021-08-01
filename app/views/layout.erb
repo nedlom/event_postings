@@ -49,6 +49,7 @@
 
     <div class="wrapper">
       <% if logged_in? %>
+        <h3 style="text-align: right;">Current User: <%= current_user.name %></h3> 
         <div class="topnav">
           <a href="/events">See All Events</a>
           <a href="/events/new">Create New Event</a>
@@ -63,9 +64,6 @@
       <% if flash[:errors] %>
         <h3 style="color: red; text-align: center;"><%= flash[:errors] %></h3>
       <% end %>
-
-        
-      <%= current_user.name if logged_in? %>
 
       <%= yield %>
 

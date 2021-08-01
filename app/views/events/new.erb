@@ -2,23 +2,39 @@
 
 <form method="post" action="/events">
     <p>
-        <label>Event Title</label>
+        <b><label>Title</label></b>
         <input type="text" name="title" size="81">
     </p>
 
     <p>
-        <label>Location</label>
+        <b><label>Location</label></b>
         <input type="text" name="location">
-    
-        <label>Date</label>
-        <input type="text" name="date">
+        &ensp;
+        <b><label>Date</label></b>
+        <input type="date" name="date">
+        &ensp;
+        <b><label>Time</label></b>
+        <select name="time1">
+          <% (1..12).each do |n| %>
+            <option value="<%= n %>"><%= n %></option>
+          <% end %>
+        </select> :
 
-        <label>Time</label>
-        <input type="text" name="time">
+        <select name="time2">
+          <option value="00">00</option>
+          <option value="15">15</option>
+          <option value="30">30</option>
+          <option value="45">45</option>
+        </select>
+        
+        <select name="time3">
+          <option value="AM">AM</option>
+          <option value="PM">PM</option>
+        </select>
     </p>
 
     <p>
-        <label>Event Description</label><br>
+        <b><label>Description</label><b><br>
         <textarea rows="10" cols="86" type="text" name="description"></textarea>
     </p>
 

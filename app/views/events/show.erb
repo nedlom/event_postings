@@ -6,22 +6,30 @@
     width:20px;
     height:auto;
     display:inline-block;
-  } 
+  }
+
 </style>
 
-<h2>Event: <%= @current_event.title %></h2>
-Host: <%= @current_event.user.name %>
-<br><br>
-Description: <%= @current_event.description %>
-<br><br>
-Location: <%= @current_event.location %>
-<br><br>
-Date: <%= @current_event.date %>
-<br><br>
-Time: <%= @current_event.time %>
-<br><br>
+<h2><%= @current_event.title %></h2>
+<b>Created By:</b> <%= @current_event.user.name %>
 
-<% if @current_event.user == current_user %>
+<br>
+<br>
+
+<%= @current_event.description %>
+
+<br>
+<br>
+
+<b>Location:</b> <%= @current_event.location %>
+&emsp;
+<b>Date:</b> <%= @current_event.date %>
+&emsp;
+<b>Time:</b> <%= @current_event.time %>
+
+<% if event_belongs_to_user? %>
+  <br>
+  <br>
   <div id="button1">
     <a href="/events/<%= @current_event.id %>/edit" %><button>Edit Event</button></a>
   </div>

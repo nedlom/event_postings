@@ -1,29 +1,48 @@
 <h2>Edit This Event</h2>
 
-<form method="post" action="/events/<%= @event.id %>">
+<form method="post" action="/events/<%= current_event.id %>">
     <input type="hidden" name="_method" value="patch">
+
     <p>
-        <label>Event Title</label>
-        <input type="text" name="event[title]" size="81" value="<%= @event.title %>">
+        <b><label>Title</label></b>
+        <input type="text" name="event[title]" size="81" value="<%= current_event.title %>">
     </p>
 
     <p>
-        <label>Location</label>
-        <input type="text" name="event[location]">
-    
-        <label>Date</label>
-        <input type="text" name="event[date]">
+        <b><label>Location</label></b>
+        <input type="text" name="event[location]" value="<%= current_event.location %>">
+        &ensp;
+        <b><label>Date</label></b>
+        <input type="date" name="event[date]" element.value="<%= current_event.date %>">
+        <i style="color: blue;">(Current: <%= current_event.date %>)</i>
+        &ensp;
+        <b><label>Time</label></b>
+        <select name="time1">
+          <% (1..12).each do |n| %>
+            <option value="<%= n %>"><%= n %></option>
+          <% end %>
+        </select> :
 
-        <label>Time</label>
-        <input type="text" name="event[time]">
+        <select name="time2">
+          <option value="00">00</option>
+          <option value="15">15</option>
+          <option value="30">30</option>
+          <option value="45">45</option>
+        </select>
+        
+        <select name="time3">
+          <option value="AM">AM</option>
+          <option value="PM">PM</option>
+        </select>
+        <i style="color: blue;">(Current: <%= current_event.time %>)</i>
     </p>
 
     <p>
-        <label>Event Description</label><br>
-        <textarea rows="10" cols="86" type="text" name="event[description]"></textarea>
+        <b><label>Description</label><b><br>
+        <textarea rows="10" cols="86" type="text" name="event[description]"><%= current_event.description %></textarea>
     </p>
 
     <p>
-        <input type="submit" value="Edit Event">
+        <input type="submit" value="Submit">
     </p>
 </form>

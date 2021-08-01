@@ -29,55 +29,41 @@
           font-size: 17px;
         }
 
-        .topnav span {
-          float: left;
-          color: #f2f2f2;
-          text-align: center;
-          padding: 14px 16px;
-          text-decoration: none;
-          font-size: 17px;
-        }
-
         /* Change the color of links on hover */
         .topnav a:hover {
           background-color: #ddd;
           color: black;
         }
 
+        .topnav a .active {
+          background-color: #04AA6D;
+          color: white;
+        }
+
       </style>
   </head>
   <body>
-  <div class="nav">
-  <% if logged_in? %>
-    <a href="/users/<%= current_user.id %>">Your Account</a>
-    <a href="/logout">Logout</a>
-    <a href="/events/new">Create New Event</a>
-    <a href="/events">See All Events</a>
-  <% end %>
-</div>
+ 
+    <div class="nav">
 
-    
     <div class="wrapper">
       <% if logged_in? %>
         <div class="topnav">
-          <span>Hello, <%= current_user.name %>:</span>
-          <a href="/users/<%= current_user.id %>">Your Account</a>
-          <a href="/logout">Logout</a>
-          <a href="/events/new">Create New Event</a>
           <a href="/events">See All Events</a>
+          <a href="/events/new">Create New Event</a>
+          <a href="/logout">Logout</a>
         </div>
         <br>
       <% end %>
 
+      <% if flash[:message] %>
+        <h3 style="color: green; text-align: center;"><%= flash[:message] %></h3>
+      <% end %>
+      <% if flash[:errors] %>
+        <h3 style="color: red;"><%= flash[:errors] %></h3>
+      <% end %>
 
-    <% if flash[:message] %>
-      <h3 style="color: green;"><%= flash[:message] %></h3>
-    <% end %>
-    <% if flash[:errors] %>
-      <h3 style="color: red;"><%= flash[:errors] %></h3>
-    <% end %>
-
-        <%= yield %>
+      <%= yield %>
 
       <footer class="branding">
         <small>&copy; 2021 <strong>EventPostings</strong></small>

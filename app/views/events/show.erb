@@ -22,15 +22,17 @@ Time: <%= @event.time %>
 <br><br>
 
 <% if @event.user == current_user %>
-<div id="button1">
-  <a href="/events/<%= @event.id %>/edit" %><button>Edit Event</button></a>
-</div>
-<div class="divide"></div>
-<div id="button2">
-  <form method="post" action="/events/<%= @event.id %>">
-    <input type="hidden" name="_method" value="delete">
-    <input type="submit" value="Delete Event">
-  </form>
-</div>
+  <div id="button1">
+    <a href="/events/<%= @event.id %>/edit" %><button>Edit Event</button></a>
+  </div>
+
+  <div class="divide"></div>
+  
+  <div id="button2">
+    <form method="post" action="/events/<%= @event.id %>">
+      <input type="hidden" name="_method" value="delete">
+      <input type="submit" value="Delete Event">
+    </form>
+  </div>
 <% end %>
 

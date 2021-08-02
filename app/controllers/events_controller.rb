@@ -12,12 +12,12 @@ class EventsController < ApplicationController
   end
 
   post "/events" do
-    event = current_user.events.build(attribute_hash)
+    event = current_user.events.build(event_attribute_hash)
     if event.save
-      flash[:message] = "New event created."
+      flash[:message] = "Event creation successful."
       redirect "/events/#{event.id}"
     else
-      flash[:errors] = "Event creation failed. #{event.errors.full_messages.to_sentence}."
+      flash[:errors] = "Event creation failed: #{event.errors.full_messages.to_sentence}."
       redirect "/events/new"
     end
   end
@@ -37,11 +37,11 @@ class EventsController < ApplicationController
 
   patch "/events/:id" do
     check_access
-    if get_event.update(attribute_hash)
-      flash[:message] = "Successfully updated event."
+    if get_event.update(event_attribute_hash)
+      flash[:message] = "Event update successful."
       redirect "/events/#{get_event.id}"
     else 
-      flash[:errors] = "Update failed. #{get_event.errors.full_messages.to_sentence.capitalize}"
+      flash[:errors] = "Event update failed: #{get_event.errors.full_messages.to_sentence}"
       redirect "/events/#{get_event.id}/edit"
     end
   end
@@ -49,7 +49,7 @@ class EventsController < ApplicationController
   delete "/events/:id" do
     check_access
     get_event.destroy
-    flash[:message] = "Successfully deleted event."
+    flash[:message] = "Event deletion successful."
     redirect "/events"  
   end
 

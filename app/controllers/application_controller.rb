@@ -11,7 +11,6 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/" do
-    redirect_if_logged_in
     erb :welcome
   end
 
@@ -49,14 +48,14 @@ class ApplicationController < Sinatra::Base
 
     def redirect_if_not_logged_in
       if !logged_in?
-        flash[:message] = "Please login." 
+        flash[:errors] = "Login or sign up to view website." 
         redirect "/"
       end
     end
 
     def redirect_if_event_does_not_belong_to_user
       if !event_belongs_to_user?
-        flash[:errors] = "You are not authorized to make changes to #{get_event.user.name}'s event." 
+        flash[:errors] = "You are not authorized to make changes to #{get_event.user.name}'s events." 
         redirect "/events/#{get_event.id}"
       end
     end
@@ -79,7 +78,7 @@ class ApplicationController < Sinatra::Base
       params[:time1] + ":" + params[:time2] + params[:time3]
     end
 
-    def attribute_hash
+    def event_attribute_hash
       {
         title: params[:title],
         description: params[:description], 
@@ -87,7 +86,7 @@ class ApplicationController < Sinatra::Base
         date: params_date_fix,
         time: params_time_fix
       }
-    end
 
+    end
   end
 end

@@ -5,15 +5,15 @@
 
     <p>
         <b><label>Title</label></b>
-        <input type="text" name="event[title]" size="81" value="<%= current_event.title %>">
+        <input type="text" name="title" size="81" value="<%= current_event.title %>">
     </p>
 
     <p>
         <b><label>Location</label></b>
-        <input type="text" name="event[location]" value="<%= current_event.location %>">
+        <input type="text" name="location" value="<%= current_event.location %>">
         &ensp;
         <b><label>Date</label></b>
-        <input type="date" name="event[date]" element.value="<%= current_event.date %>">
+        <input type="date" name="date" element.value="<%= current_event.date %>">
         <i style="color: blue;">(Current: <%= current_event.date %>)</i>
         &ensp;
         <b><label>Time</label></b>
@@ -39,7 +39,7 @@
 
     <p>
         <b><label>Description</label><b><br>
-        <textarea rows="10" cols="86" type="text" name="event[description]"><%= current_event.description %></textarea>
+        <textarea rows="10" cols="86" type="text" name="description"><%= current_event.description %></textarea>
     </p>
 
     <p>

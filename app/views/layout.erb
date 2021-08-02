@@ -40,16 +40,22 @@
           background-color: #04AA6D;
           color: white;
         }
+
+        div.flex-box {
+          display: flex;
+          justify-content: space-between;
+          border: 2px;
+      }
       </style>
   </head>
 
   <body>
- 
-    <div class="nav">
-
     <div class="wrapper">
       <% if logged_in? %>
-        <h3 style="text-align: right;">Current User: <%= current_user.name %></h3> 
+        <div class="flex-box">
+          <span><h3 id="id1">Event Postings</h3> </span>
+          <span><h3 id="id2" style="text-align: right;">Current User: <%= current_user.name %></h3> </span>
+        </div>
         <div class="topnav">
           <a href="/events">See All Events</a>
           <a href="/events/new">Create New Event</a>

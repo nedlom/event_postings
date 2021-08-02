@@ -1,6 +1,6 @@
 # Event Postings
 
-A simple, Sinatra based application for posting events on a community message board. After registration users have the ability view events posted by all other users, create and post their own events for others to see, and delete or update any event they created. 
+A simple, Sinatra-based application for posting events on a community message board. After registration users have the ability to view events posted by all other users, create and post their own events for others to see, and delete or update any event they created. 
 
 ## Installation
 

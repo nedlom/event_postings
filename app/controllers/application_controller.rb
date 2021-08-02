@@ -16,6 +16,7 @@ class ApplicationController < Sinatra::Base
   end
 
   helpers do
+
     def logged_in?
       !!current_user
     end
@@ -46,41 +47,39 @@ class ApplicationController < Sinatra::Base
       end
     end
 
-    def redirect_if_not_users_event_or_not_logged_in
-      redirect_if_not_logged_in
+    def redirect_if_event_does_not_belong_to_user
       if !event_belongs_to_user?
         flash[:errors] = "You are not authorized to make changes to #{current_event.user.name}'s event." 
         redirect "/events/#{current_event.id}"
       end
     end
 
+    def check_access
+      redirect_if_not_logged_in
+      redirect_if_event_does_not_belong_to_user
+    end
+
     def params_date_fix
-      if params[:event]
-        date = params[:event][:date].split("-")
-        date[1], date[2] = date[2], date[1]
-        params[:event][:date] = date.reverse.join("/")
-      else
+      if params[:date] != ""
         date = params[:date].split("-")
         date[1], date[2] = date[2], date[1]
-        params[:date] = date.reverse.join("/")
+        date.reverse.join("/")
       end
     end
 
     def params_time_fix
-      time = params[:time1] + ":" + params[:time2] + params[:time3]
-      if params[:event]
-        params[:event][:time] = time
-      else
-        params[:time] = time
-      end
-      params.delete(:time1)
-      params.delete(:time2)
-      params.delete(:time3)
+      params[:time1] + ":" + params[:time2] + params[:time3]
     end
 
-    def format_date_and_time
-      params_date_fix
-      params_time_fix
+    def attribute_hash
+      {
+        title: params[:title],
+        description: params[:description], 
+        location: params[:location],
+        date: params_date_fix,
+        time: params_time_fix
+      }
     end
+    
   end
 end

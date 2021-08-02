@@ -12,8 +12,7 @@ class EventsController < ApplicationController
   end
 
   post '/events' do
-    format_date_and_time
-    @event = current_user.events.build(params)
+    @event = current_user.events.build(attribute_hash)
     if @event.save
       flash[:message] = "New Event Created"
       redirect "/events/#{@event.id}"
@@ -30,16 +29,15 @@ class EventsController < ApplicationController
   end
 
   get '/events/:id/edit' do 
-    redirect_if_not_users_event_or_not_logged_in
+    check_access
     current_event
     erb :'/events/edit' 
   end
 
   patch '/events/:id' do
-    redirect_if_not_users_event_or_not_logged_in
-    format_date_and_time
+    check_access
     event = Event.find_by(id: params[:id])
-    if event.update(params[:event])
+    if event.update(attribute_hash)
       redirect "/events/#{event.id}"
     else 
       flash[:errors] = "Update Failed. #{event.errors.full_messages.to_sentence.capitalize}"
@@ -48,7 +46,7 @@ class EventsController < ApplicationController
   end
 
   delete '/events/:id' do
-    redirect_if_not_users_event_or_not_logged_in
+    check_access
     event = Event.find_by(id: params[:id])
     event.destroy
     flash[:message] = "Successfully Deleted Event"

@@ -1,4 +1,14 @@
-A simple event posting app.
+# Event Postings
+
+A simple, Sinatra based application for posting events on a community message board. After registration users have the ability view events posted by all other users, create and post their own events for others to see, and delete or update any event they created. 
+
+## Installation
+
+1. Clone this repo
+2. Run bundle install
+3. Run `rake db:migrate`
+4. Run `shotgun`
+5. Open your browser to `localhost:9393`
 
 LICENSE
 

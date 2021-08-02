@@ -7,40 +7,44 @@
     height:auto;
     display:inline-block;
   }
-
 </style>
 
-<h2><%= @current_event.title %></h2>
-<b>Created By:</b> <%= @current_event.user.name %>
+<p>
+  <h2><%= get_event.title %></h2>
+  <b>Created By:</b> <%= get_event.user.name %>
+</p>
 
-<br>
-<br>
+<p>
+  <%= get_event.description %>
+</p>
 
-<%= @current_event.description %>
 
-<br>
-<br>
+<p>
+  <b>Location:</b> <%= get_event.location %>
 
-<b>Location:</b> <%= @current_event.location %>
-&emsp;
-<b>Date:</b> <%= @current_event.date %>
-&emsp;
-<b>Time:</b> <%= @current_event.time %>
+  &emsp;
 
-<% if event_belongs_to_user? %>
-  <br>
-  <br>
-  <div id="button1">
-    <a href="/events/<%= @current_event.id %>/edit" %><button>Edit Event</button></a>
-  </div>
+  <b>Date:</b> <%= get_event.date %>
 
-  <div class="divide"></div>
+  &emsp;
 
-  <div id="button2">
-    <form method="post" action="/events/<%= @current_event.id %>">
-      <input type="hidden" name="_method" value="delete">
-      <input type="submit" value="Delete Event">
-    </form>
-  </div>
-<% end %>
+  <b>Time:</b> <%= get_event.time %>
+</p>
+
+<p>
+  <% if event_belongs_to_user? %>
+    <div id="button1">
+      <a href="/events/<%= get_event.id %>/edit" %><button>Edit Event</button></a>
+    </div>
+
+    <div class="divide"></div>
+
+    <div id="button2">
+      <form method="post" action="/events/<%= get_event.id %>">
+        <input type="hidden" name="_method" value="delete">
+        <input type="submit" value="Delete Event">
+      </form>
+    </div>
+  <% end %>
+</p>
 

@@ -1,48 +1,53 @@
-<h2>Edit This Event</h2>
+<h2>Event Edit Form</h2>
 
-<form method="post" action="/events/<%= current_event.id %>">
-    <input type="hidden" name="_method" value="patch">
+<form method="post" action="/events/<%= get_event.id %>">
+  <input type="hidden" name="_method" value="patch">
 
-    <p>
-        <b><label>Title</label></b>
-        <input type="text" name="title" size="81" value="<%= current_event.title %>">
-    </p>
+  <p>
+    <b><label>Title</label></b>
+    <input type="text" name="title" size="81" value="<%= get_event.title %>">
+  </p>
 
-    <p>
-        <b><label>Location</label></b>
-        <input type="text" name="location" value="<%= current_event.location %>">
-        &ensp;
-        <b><label>Date</label></b>
-        <input type="date" name="date" element.value="<%= current_event.date %>">
-        <i style="color: blue;">(Current: <%= current_event.date %>)</i>
-        &ensp;
-        <b><label>Time</label></b>
-        <select name="time1">
-          <% (1..12).each do |n| %>
-            <option value="<%= n %>"><%= n %></option>
-          <% end %>
-        </select> :
+  <p>
+    <b><label>Location</label></b>
+    <input type="text" name="location" value="<%= get_event.location %>">
 
-        <select name="time2">
-          <option value="00">00</option>
-          <option value="15">15</option>
-          <option value="30">30</option>
-          <option value="45">45</option>
-        </select>
-        
-        <select name="time3">
-          <option value="AM">AM</option>
-          <option value="PM">PM</option>
-        </select>
-        <i style="color: blue;">(Current: <%= current_event.time %>)</i>
-    </p>
+    &ensp;
 
-    <p>
-        <b><label>Description</label><b><br>
-        <textarea rows="10" cols="86" type="text" name="description"><%= current_event.description %></textarea>
-    </p>
+    <b><label>Date</label></b>
+    <input type="date" name="date" element.value="<%= get_event.date %>">
+    <i style="color: blue;">(Current: <%= get_event.date %>)</i>
 
-    <p>
-        <input type="submit" value="Submit">
-    </p>
+    &ensp;
+
+    <b><label>Time</label></b>
+    <select name="time1">
+      <% (1..12).each do |n| %>
+        <option value="<%= n %>"><%= n %></option>
+      <% end %>
+    </select> :
+
+    <select name="time2">
+      <option value="00">00</option>
+      <option value="15">15</option>
+      <option value="30">30</option>
+      <option value="45">45</option>
+    </select>
+    
+    <select name="time3">
+      <option value="AM">AM</option>
+      <option value="PM">PM</option>
+    </select>
+    <i style="color: blue;">(Current: <%= get_event.time %>)</i>
+  </p>
+
+  <p>
+    <b><label>Description</label><b><br>
+    <textarea rows="10" cols="86" type="text" name="description"><%= get_event.description %></textarea>
+  </p>
+
+  <p>
+    <input type="submit" value="Submit">
+  </p>
+
 </form>

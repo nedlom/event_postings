@@ -1,44 +1,47 @@
 <h2>Create A New Event</h2>
 
 <form method="post" action="/events">
-    <p>
-        <b><label>Title</label></b>
-        <input type="text" name="title" size="81">
-    </p>
+  <p>
+    <b><label>Title</label></b>
+    <input type="text" name="title" size="81">
+  </p>
 
-    <p>
-        <b><label>Location</label></b>
-        <input type="text" name="location">
-        &ensp;
-        <b><label>Date</label></b>
-        <input type="date" name="date">
-        &ensp;
-        <b><label>Time</label></b>
-        <select name="time1">
-          <% (1..12).each do |n| %>
-            <option value="<%= n %>"><%= n %></option>
-          <% end %>
-        </select> :
+  <p>
+    <b><label>Location</label></b>
+    <input type="text" name="location">
 
-        <select name="time2">
-          <option value="00">00</option>
-          <option value="15">15</option>
-          <option value="30">30</option>
-          <option value="45">45</option>
-        </select>
-        
-        <select name="time3">
-          <option value="AM">AM</option>
-          <option value="PM">PM</option>
-        </select>
-    </p>
+    &ensp;
 
-    <p>
-        <b><label>Description</label><b><br>
-        <textarea rows="10" cols="86" type="text" name="description"></textarea>
-    </p>
+    <b><label>Date</label></b>
+    <input type="date" name="date">
+    &ensp;
+    
+    <b><label>Time</label></b>
+    <select name="time1">
+      <% (1..12).each do |n| %>
+        <option value="<%= n %>"><%= n %></option>
+      <% end %>
+    </select> :
 
-    <p>
-        <input type="submit" value="Create Event">
-    </p>
+    <select name="time2">
+      <option value="00">00</option>
+      <option value="15">15</option>
+      <option value="30">30</option>
+      <option value="45">45</option>
+    </select>
+    
+    <select name="time3">
+      <option value="AM">AM</option>
+      <option value="PM">PM</option>
+    </select>
+  </p>
+
+  <p>
+    <b><label>Description</label><b><br>
+    <textarea rows="10" cols="86" type="text" name="description"></textarea>
+  </p>
+
+  <p>
+    <input type="submit" value="Create Event">
+  </p>
 </form>

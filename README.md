@@ -10,8 +10,10 @@ A simple, Sinatra based application for posting events on a community message bo
 4. Run `shotgun`
 5. Open your browser to `localhost:9393`
 
-LICENSE
+## Contributing
+Bug reports and pull requests are welcome on GitHub at https://github.com/nedlom/event_postings. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
+## LICENSE
 Copyright <2021> <nedlom>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:

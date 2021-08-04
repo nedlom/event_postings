@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     user = User.new(params)
     if user.save
       session[:user_id] = user.id
-      flash[:message] = "Account creation successful. Welcome, #{user.name}!"
+      flash[:message] = "Account creation successful. Welcome, #{user.name}."
       redirect "/events"
     else
       flash[:errors] = "Account creation failed: #{user.errors.full_messages.to_sentence.capitalize}."
@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      flash[:message] = "Login successful. Welcome, #{user.name}!"
+      flash[:message] = "Login successful. Welcome, #{user.name}."
       redirect "/events"
     else
       flash[:errors] = "Incorrect email or password."
@@ -37,7 +37,7 @@ class UsersController < ApplicationController
   get "/logout" do
     redirect_if_not_logged_in
     session.clear
-    flash[:message] = "Logout successful. Goodbye, #{current_user.name}!"
+    flash[:message] = "Logout successful. Goodbye, #{current_user.name}."
     redirect "/"
   end
   
